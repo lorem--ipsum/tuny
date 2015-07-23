@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html lang="en" ng-app="tuny">
+<head>
+  <title>Tuny</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="app.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+</head>
+
+<body ng-controller='TunyCtrl'>
+<div class="top-display">{{currentVideo.title || 'No song playing'}}</div>
+  <div class="controls">
+    <div class="left"></div><div class="middle">
+      <button class="primary" ng-click="back()" ng-class="{disabled: !currentVideo}"><i class="fa fa-fast-backward"></i></button>
+      <button class="primary" ng-click="playPause()"><i class="fa" ng-class="{'fa-play': !playing, 'fa-pause': playing}"></i></button>
+      <button class="primary" ng-click="next()" ng-class="{disabled: !currentVideo}"><i class="fa fa-fast-forward"></i></button>
+    </div><div class="right">
+      <div class="button shuffle-button" ng-click="toggleShuffle()" ng-class="{disabled: !videos, active: shuffled}">
+        <i class="fa fa-random"></i>
+      </div>
+
+      <div class="button youtube-button" ng-click="videoVisible = !videoVisible" ng-class="{disabled: !videos, active: videoVisible}">
+        <i class="fa fa-youtube-play"></i>
+      </div>
+    </div>
+  </div>
+  <div class="video-player" ng-class="{visible: videoVisible}">
+    <div
+      youtube-video="currentVideo.id"
+      on-end="onEnd"
+      on-error="onError"
+      is-playing="playing"
+    ></div>
+  </div><div class="songs-list">
+    <div
+      class="song"
+      ng-class="{playing: currentVideo === video}"
+      ng-repeat="video in videos"
+      ng-click="playVideo(video)"
+    ><i class="fa fa-play"></i><i class="fa fa-exclamation" ng-show="video.inError"></i> {{video.title}}</div>
+  </div>
+</body>
+
+<script type="text/javascript" src="node_modules/angular/angular.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+<script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
+</html>
