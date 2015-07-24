@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html lang="en" ng-app="tuny">
+<head>
+  <title>Tuny</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="app.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+</head>
+
+<body ng-controller='TunyCtrl'>
+  <div class="controls top-controls">
+    <div class="left">
+      <div class="song-title" ng-bind="currentSong.title || 'No song playing'"></div>
+    </div><div class="right">
+      <button ng-click="toggleShuffle()" ng-class="{disabled: !songs}"><i class="fa" ng-class="{'fa-toggle-off': !shuffled, 'fa-toggle-on': shuffled}"></i> <i class="fa fa-random"></i></button>
+    </div>
+  </div>
+  <div class="controls sub-controls">
+    <ng-audio
+        songs="songs"
+        current-song="currentSong"
+        is-playing="isPlaying"
+      >
+    </ng-audio>
+  </div>
+  <div class="songs-list">
+    <div
+      class="song"
+      ng-class="{playing: $parent.currentSong === song}"
+      ng-repeat="song in songs"
+      ng-click="$parent.currentSong = song"
+    >
+      <div class="icons">
+        <i class="fa fa-circle-o-notch fa-spin" ng-show="song.isLoading"></i>
+      </div>
+      {{song.title}} <span class="info" ng-show="song.preloading">preloading...</span>
+    </div>
+  </div>
+  <div class="actions-bar">
+    <button title="Change shortcuts" ng-click="shortcutsOpen = !shortcutsOpen"><i class="fa fa-gear"></i></button>
+  </div>
+  <shortcuts-editor open="shortcutsOpen"></shortcuts-editor>
+</body>
+
+<script type="text/javascript" src="node_modules/angular/angular.js"></script>
+<script type="text/javascript" src="app.js"></script>
+</html>

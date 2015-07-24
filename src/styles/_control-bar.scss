@@ -1,0 +1,70 @@
+.controls {
+  background-color: $tint-700;
+  width: calc(100% - 20px);
+  padding: 0px 10px;
+
+  .left, .right {
+    display: inline-block;
+    width: 50%;
+  }
+
+  .right {
+    text-align: right;
+    vertical-align: top;
+  }
+}
+
+.song-title {
+  height: 60px;
+  line-height: 60px;
+  color: $text-white-primary;
+  font-size: 1.5em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.audio-bar {
+  width: 100%;
+  height: 40px;
+
+  margin: 0px 10px;
+  display: inline-block;
+
+  .label {
+    display: inline-block;
+    width: 40px;
+    font-size: 0.8em;
+    color: $text-white-secondary;
+
+    &:last-child {
+      margin-left: 8px;
+    }
+  }
+
+  .track-container {
+    position: relative;
+    width: calc(100% - 100px);
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+
+    .track {
+      width: 100%;
+      height: 1px;
+      margin-top: 19px;
+      background-color: $text-white-secondary;
+    }
+
+    .thumb {
+      background-color: $text-white-secondary;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      position: absolute;
+      top: 15px;
+      margin-left: -5px;
+      left: 0px;
+    }
+  }
+}

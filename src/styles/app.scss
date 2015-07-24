@@ -1,0 +1,150 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  margin: 0;
+}
+
+
+@import 'colors';
+@import 'buttons';
+@import 'control-bar';
+
+$top-controls-height: 50px;
+$sub-controls-height: 50px;
+$actions-bar-height: 20px;
+$actions-panel-height: 50px;
+
+.drop-indicator {
+  display: none;
+  position: absolute;
+  background-color: $grey-700;
+  opacity: 0.7;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+
+  .label {
+    font-size: 3em;
+    top: 50%;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    color: black;
+  }
+}
+
+.top-controls {
+  height: $top-controls-height;
+  line-height: $top-controls-height;
+}
+
+.sub-controls {
+  height: $sub-controls-height;
+  line-height: $sub-controls-height;
+}
+
+.actions-bar {
+  background-color: $grey-500;
+  position: absolute;
+  bottom: 0px;
+  height: $actions-bar-height;
+  width: 100%;
+}
+
+.shortcuts-editor {
+  position: absolute;
+  bottom: 0px;
+  height: 0px;
+  width: 100%;
+  padding-top: 0px;
+  background-color: $grey-100;
+
+  &.open {
+    padding-top: 20px;
+    height: 140px;
+  }
+
+  .title {
+    font-size: 1.1em;
+    color: $text-primary;
+    margin-bottom: 15px;
+    margin-left: 10px;
+
+    .help-button {
+      float: right;
+      padding-right: 10px;
+    }
+  }
+
+  .shortcut-item {
+    > * {
+      display: inline-block;
+    }
+
+    .label {
+      color: $text-primary;
+      width: 80px;
+      font-size: 0.8em;
+      text-align: right;
+    }
+  }
+
+  .buttons {
+    text-align: center;
+  }
+}
+
+.songs-list {
+  position: absolute;
+  top: $top-controls-height + $sub-controls-height;;
+  width: 100%;
+  bottom: $actions-bar-height;
+  overflow-y: scroll;
+  border-top: 1px solid $grey-200;
+  border-bottom: 1px solid $grey-200;
+
+  box-shadow: inset 0px 1px 1px 0px rgba(0,0,0,0.05);
+
+  .song {
+    height: 30px;
+    line-height: 30px;
+    padding: 10px 5px;
+
+    font-weight: 100;
+    font-size: 0.9em;
+    cursor: pointer;
+    color: $text-primary;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $grey-200;
+    }
+
+    &:hover {
+      background-color: $grey-200;
+    }
+
+    &.playing {
+      background-color: $grey-100;
+    }
+
+    .icons {
+      width: 20px;
+      padding-left: 10px;
+      display: inline-block;
+
+      i.fa {
+        color: $tint-500;
+      }
+    }
+
+    .info {
+      font-size: 0.7em;
+      padding-left: 5px;
+    }
+  }
+}

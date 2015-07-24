@@ -1,0 +1,42 @@
+button, a {
+  outline: none;
+  border: none;
+  color: $text-white-secondary;
+  background-color: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &.disabled {
+    cursor: initial;
+    color: $text-white-disabled;
+  }
+
+  &:not(.disabled):hover {
+    color: $text-white-primary;
+  }
+
+  &.active {
+    color: $text-white-secondary;
+  }
+
+  &.primary {
+    height: 40px;
+    width: 40px;
+  }
+
+  &.dark {
+    color: $text-secondary;
+
+    &.disabled {
+      color: $text-disabled;
+    }
+
+    &:not(.disabled):hover {
+      color: $text-primary;
+    }
+
+    &.active {
+      color: $text-secondary;
+    }
+  }
+}
