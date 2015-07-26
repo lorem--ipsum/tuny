@@ -1,16 +1,18 @@
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   font-weight: 100;
   margin: 0;
-  overflow-y: hidden;
+  // overflow-y: hidden;
   min-width: 450px;
-}
 
-$top-controls-height: 50px;
-$sub-controls-height: 50px;
-$actions-bar-height: 20px;
-$actions-panel-height: 50px;
-$settings-drawer-height: 130px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
 
 @import 'utils';
 @import 'colors';
@@ -18,87 +20,21 @@ $settings-drawer-height: 130px;
 @import 'inputs';
 @import 'control-bar';
 @import 'time-slider';
+@import 'songs-list';
 @import 'settings';
 
 
-.drop-indicator {
-  display: none;
-  position: absolute;
-  background-color: $grey-700;
-  opacity: 0.7;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-
-  .label {
-    font-size: 3em;
-    top: 50%;
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    color: black;
-  }
-}
-
-.top-controls {
-  height: $top-controls-height;
-}
-
-.sub-controls {
-  height: $sub-controls-height;
+.controls {
+  flex: 0 90px;
+  min-height: 90px;
 }
 
 .songs-list {
-  position: absolute;
-  top: $top-controls-height + $sub-controls-height;;
-  width: 100%;
-  bottom: $actions-bar-height;
-  overflow-y: scroll;
-  border-top: 1px solid $grey-200;
-  border-bottom: 1px solid $grey-200;
-
-  box-shadow: inset 0px 1px 1px 0px rgba(0,0,0,0.05);
-
-  .song {
-    height: 30px;
-    line-height: 30px;
-    padding: 10px 5px;
-
-    font-weight: 100;
-    font-size: 0.9em;
-    cursor: pointer;
-    color: $text-primary;
-
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-
-    &:not(:last-child) {
-      border-bottom: 1px solid $grey-200;
-    }
-
-    &:hover {
-      background-color: $grey-200;
-    }
-
-    &.playing {
-      background-color: $grey-100;
-    }
-
-    .icons {
-      width: 20px;
-      padding-left: 10px;
-      display: inline-block;
-
-      i.fa {
-        color: $tint-500;
-      }
-    }
-
-    .info {
-      font-size: 0.7em;
-      padding-left: 5px;
-    }
-  }
+  flex: 1 1000px;
 }
+
+.settings-bar {
+  min-height: 20px;
+  flex: 1 0 auto;
+}
+

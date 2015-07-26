@@ -37,6 +37,8 @@
   </div>
 
   <div class="songs-list">
+  <div class="songs-container">
+
     <div
       class="song"
       ng-class="{playing: $parent.currentSong === song}"
@@ -48,6 +50,7 @@
       </div>
       {{song.title}} <span class="info" ng-show="song.preloading">preloading...</span>
     </div>
+  </div>
   </div>
 
   <div class="settings-bar">

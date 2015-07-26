@@ -1,8 +1,7 @@
 .settings-bar {
   background-color: $grey-500;
-  position: absolute;
-  bottom: 0px;
   width: 100%;
+  overflow-y: hidden;
 
   .buttons {
 
@@ -16,7 +15,7 @@
     @include animate(height, padding-top);
 
     &.open {
-      height: $settings-drawer-height;
+      height: 130px;
     }
   }
 
