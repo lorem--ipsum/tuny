@@ -86,7 +86,7 @@ angular.module('player', [])
       return string
     }
 
-.directive 'audioBar', (timeUtils) ->
+.directive 'timeSlider', (timeUtils) ->
   return {
     replace: true
     scope: {
@@ -97,7 +97,7 @@ angular.module('player', [])
       scope.getLeft = -> (scope.currentTime/scope.duration)*100 + '%'
       scope.labelize = timeUtils.durationToString
       return
-    template: """<div class="audio-bar">
+    template: """<div class="time-slider">
       <div class="label">{{labelize(currentTime)}}</div>
       <div class="track-container">
         <div class="track"></div>
@@ -114,6 +114,8 @@ angular.module('player', [])
       songs: '='
       currentSong: '='
       isPlayingAttr: '=isPlaying'
+      duration: '=?'
+      currentTime: '=?'
     }
     link: (scope, element, attrs) ->
       player = element[0].getElementsByTagName('audio')[0]
@@ -212,14 +214,10 @@ angular.module('player', [])
       return
     template: """
     <div class="audio-player">
-      <div class="left">
-        <audio-bar duration="duration" current-time="currentTime"></audio-bar>
-      </div><div class="right">
-        <button ng-click="previous()" ng-class="{disabled: !currentSong}"><i class="fa fa-2x fa-fast-backward"></i></button>
-        <button ng-click="playPause()"><i class="fa fa-2x" ng-class="{'fa-play': !isPlaying(), 'fa-pause': isPlaying()}"></i></button>
-        <button ng-click="next()" ng-class="{disabled: !currentSong}"><i class="fa fa-2x fa-fast-forward"></i></button>
-        <audio></audio>
-      </div>
+      <button ng-click="previous()" ng-class="{disabled: !currentSong}"><i class="fa fa-2x fa-fast-backward"></i></button>
+      <button ng-click="playPause()"><i class="fa fa-2x" ng-class="{'fa-play': !isPlaying(), 'fa-pause': isPlaying()}"></i></button>
+      <button ng-click="next()" ng-class="{disabled: !currentSong}"><i class="fa fa-2x fa-fast-forward"></i></button>
+      <audio></audio>
     </div>
     """
   }

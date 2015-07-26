@@ -1,0 +1,15 @@
+input[type=text] {
+  border: none;
+
+  color: $text-primary;
+  padding: 3px 7px;
+
+  opacity: 0.5;
+
+  @include animate(opacity);
+
+  &:focus {
+    outline: none;
+    opacity: 1;
+  }
+}

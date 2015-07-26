@@ -1,0 +1,55 @@
+.settings-bar {
+  background-color: $grey-500;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+
+  .buttons {
+
+  }
+
+  .drawer {
+    height: 0px;
+    width: 100%;
+
+    background-color: $grey-100;
+    @include animate(height, padding-top);
+
+    &.open {
+      height: $settings-drawer-height;
+    }
+  }
+
+}
+
+.shortcuts-editor {
+  padding-top: 10px;
+  .title {
+    font-size: 1.1em;
+    color: $text-primary;
+    margin-bottom: 15px;
+    margin-left: 10px;
+
+    .help-button {
+      float: right;
+      padding-right: 10px;
+    }
+  }
+
+  .shortcut-item {
+    > * {
+      display: inline-block;
+    }
+
+    .label {
+      color: $text-primary;
+      width: 80px;
+      font-size: 0.8em;
+      text-align: right;
+    }
+  }
+
+  .buttons {
+    text-align: center;
+  }
+}

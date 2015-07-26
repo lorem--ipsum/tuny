@@ -2,17 +2,24 @@ body {
   font-family: 'Roboto', sans-serif;
   font-weight: 100;
   margin: 0;
+  overflow-y: hidden;
+  min-width: 450px;
 }
-
-
-@import 'colors';
-@import 'buttons';
-@import 'control-bar';
 
 $top-controls-height: 50px;
 $sub-controls-height: 50px;
 $actions-bar-height: 20px;
 $actions-panel-height: 50px;
+$settings-drawer-height: 130px;
+
+@import 'utils';
+@import 'colors';
+@import 'buttons';
+@import 'inputs';
+@import 'control-bar';
+@import 'time-slider';
+@import 'settings';
+
 
 .drop-indicator {
   display: none;
@@ -36,63 +43,10 @@ $actions-panel-height: 50px;
 
 .top-controls {
   height: $top-controls-height;
-  line-height: $top-controls-height;
 }
 
 .sub-controls {
   height: $sub-controls-height;
-  line-height: $sub-controls-height;
-}
-
-.actions-bar {
-  background-color: $grey-500;
-  position: absolute;
-  bottom: 0px;
-  height: $actions-bar-height;
-  width: 100%;
-}
-
-.shortcuts-editor {
-  position: absolute;
-  bottom: 0px;
-  height: 0px;
-  width: 100%;
-  padding-top: 0px;
-  background-color: $grey-100;
-
-  &.open {
-    padding-top: 20px;
-    height: 140px;
-  }
-
-  .title {
-    font-size: 1.1em;
-    color: $text-primary;
-    margin-bottom: 15px;
-    margin-left: 10px;
-
-    .help-button {
-      float: right;
-      padding-right: 10px;
-    }
-  }
-
-  .shortcut-item {
-    > * {
-      display: inline-block;
-    }
-
-    .label {
-      color: $text-primary;
-      width: 80px;
-      font-size: 0.8em;
-      text-align: right;
-    }
-  }
-
-  .buttons {
-    text-align: center;
-  }
 }
 
 .songs-list {

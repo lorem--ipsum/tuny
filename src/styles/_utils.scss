@@ -1,0 +1,11 @@
+@mixin animate($properties...) {
+  $result: ();
+  @each $property in $properties {
+    $result: append($result, $property 0.1s ease-in-out, comma);
+  }
+
+  -webkit-transition: $result;
+  -moz-transition: $result;
+  -o-transition: $result;
+  transition: $result;
+}
