@@ -1,43 +1,46 @@
-angular.module('tuny', ['player', 'glue', 'tunyShortcuts'])
+angular.module('tuny', ['utils', 'directives'])
 
-.service 'utils', ->
-  return {
-    # Shamelessly stolen from
-    # http://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array-in-javascript
-    # and converted to CoffeeScript using http://js2.coffee/
-    shuffleArray: (o) ->
-      j = undefined
-      x = undefined
-      i = o.length
-      while i
-        j = Math.floor(Math.random() * i)
-        x = o[--i]
-        o[i] = o[j]
-        o[j] = x
+.controller 'TunyCtrl', ($scope, $http, $timeout, arrayUtils, $commands, $settings) ->
+  updateSongs = ->
+    return unless $scope.originalSongs?
 
-      return o;
-    }
+    if $scope.shuffled
+      songs = arrayUtils.shuffleArray($scope.originalSongs)
 
-.controller 'TunyCtrl', ($scope, $http, $timeout, videoLoader, utils, $commands, $settings) ->
+      if $scope.currentSong
+        songs.splice(songs.indexOf($scope.currentSong), 1)
+        songs.unshift($scope.currentSong)
+
+      $scope.songs = songs
+    else
+      $scope.songs = $scope.originalSongs.concat()
+
+    return
+
   loadSongs = (filePath) ->
     $http.get(filePath).success (data) ->
       $settings.set('last-file', filePath)
       $scope.originalSongs = data;
-      $scope.songs = data.concat();
+      updateSongs()
     return
-
-  $settings.get('last-file').then(loadSongs)
-  $commands.on('openFile', loadSongs)
 
   $scope.shuffled = false
 
   $scope.toggleShuffle = ->
-    $scope.shuffled = !$scope.shuffled
-    if $scope.shuffled
-      utils.shuffleArray($scope.songs)
-      if $scope.currentSong
-        songs = $scope.songs
-        songs.splice(songs.indexOf($scope.currentSong), 1)
-        songs.unshift($scope.currentSong)
-    else
-      $scope.songs = $scope.originalSongs.concat()
+    $scope.setShuffle(!$scope.shuffled)
+    return
+
+  $scope.setShuffle = (value) ->
+    console.log value
+    $scope.shuffled = value
+    $settings.set('shuffle-mode', value)
+    updateSongs()
+
+    return
+
+  $settings.get('last-file').then(loadSongs)
+  $settings.get('shuffle-mode').then($scope.setShuffle)
+
+  $commands.on('openFile', loadSongs)
+
+  return

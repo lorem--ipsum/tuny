@@ -1,8 +1,7 @@
 remote = require('remote')
 globalShortcut = remote.require('global-shortcut')
-shell = remote.require('shell');
 
-angular.module('tunyShortcuts', ['glue'])
+angular.module('shortcuts', [])
 
 .service '$shortcuts', ($commands, $rootScope) ->
   return {

@@ -22,7 +22,7 @@ app.on 'window-all-closed', ->
 app.on 'before-quit', -> cleanUp()
 
 app.on 'ready', ->
-  mainWindow = new BrowserWindow({width: 600, height: 800})
+  mainWindow = new BrowserWindow({width: 600, height: 800, frame: false})
   mainWindow.loadUrl('file://' + __dirname + '/index.html')
   mainWindow.on 'closed', -> mainWindow = null
   return

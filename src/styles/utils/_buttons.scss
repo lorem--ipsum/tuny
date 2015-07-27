@@ -1,4 +1,5 @@
 button, a {
+  -webkit-app-region: no-drag;
   outline: none;
   border: none;
   color: $text-white-secondary;

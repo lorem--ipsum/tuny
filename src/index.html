@@ -9,59 +9,67 @@
 
 <body ng-controller='TunyCtrl'>
 
-  <div class="controls">
+  <div class="chrome-bar">
+
+  </div>
+
+  <div class="controls secondary small">
     <div class="row">
-      <div class="col-60">
-        <div class="song-title" ng-bind="currentSong.title || 'No song playing'"></div>
-      </div><div class="col-30 right">
-        <time-slider duration="currentSong.duration" current-time="currentSong.currentTime"></time-slider>
-      </div><div class="col-10 right">
-        <button ng-click="toggleShuffle()" ng-class="{disabled: !songs}"><i class="fa" ng-class="{'fa-toggle-off': !shuffled, 'fa-toggle-on': shuffled}"></i> <i class="fa fa-random"></i></button>
-        </div>
+
+      <div class="col-100">
+        <div class="tuny-icon"><img src="assets/tuny-logo.png" alt=""></div>
+        <div class="song-title" ng-bind="currentSong.title || 'Tuny'"></div>
+      </div>
     </div>
+  </div>
+  <div class="controls secondary large">
     <div class="row">
-      <div class="col-70">
+      <div class="col-30">
         <input type="text" placeholder="Filter list..." ng-model="search.title">
         <button ng-click="search.title = ''" ng-show="search.title"><i class="fa fa-times"></i></button>
+      </div><div class="col-30">
+        <time-slider duration="currentSong.duration" current-time="currentSong.currentTime"></time-slider>
+      </div><div class="col-10">
+        <button ng-click="toggleShuffle()" ng-class="{disabled: !songs}"><i class="fa" ng-class="{'fa-toggle-off': !shuffled, 'fa-toggle-on': shuffled}"></i> <i class="fa fa-random"></i></button>
       </div><div class="col-30 right">
-        <ng-audio
+        <song-player
             songs="songs"
             current-song="currentSong"
             is-playing="isPlaying"
             duration="currentSong.duration"
             current-time="currentSong.currentTime"
           >
-        </ng-audio>
+        </song-player>
       </div>
     </div>
   </div>
 
   <div class="songs-list">
-  <div class="songs-container">
-
-    <div
-      class="song"
-      ng-class="{playing: $parent.currentSong === song}"
-      ng-repeat="song in songs | filter:search"
-      ng-click="$parent.currentSong = song"
-    >
-      <div class="icons">
-        <i class="fa fa-circle-o-notch fa-spin" ng-show="song.isLoading"></i>
+    <div class="songs-container">
+      <div
+        class="song"
+        ng-class="{playing: $parent.currentSong === song}"
+        ng-repeat="song in songs | filter:search"
+        ng-click="$parent.currentSong = song"
+      >
+        <div class="icons">
+          <i class="fa fa-circle-o-notch fa-spin" ng-show="song.isLoading"></i>
+        </div>
+        {{song.title}} <span class="info" ng-show="song.preloading">preloading...</span>
       </div>
-      {{song.title}} <span class="info" ng-show="song.preloading">preloading...</span>
     </div>
-  </div>
   </div>
 
   <div class="settings-bar">
-    <div class="buttons">
-      <button title="Settings" ng-click="settingsOpen = !settingsOpen"><i class="fa fa-gear"></i></button>
+    <div class="row">
+      <div class="col-100">
+        <button title="Settings" ng-click="settingsOpen = !settingsOpen"><i class="fa fa-gear"></i></button>
+      </div>
     </div>
     <div class="drawer" ng-class="{open: settingsOpen}">
       <shortcuts-editor open="settingsOpen"></shortcuts-editor>
     </div>
   </div>
-
 </body>
 
 <script type="text/javascript" src="node_modules/angular/angular.js"></script>

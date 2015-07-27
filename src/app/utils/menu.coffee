@@ -16,7 +16,7 @@ Menu.setApplicationMenu(Menu.buildFromTemplate([
     ]
   },
   {
-    label: 'File',
+    label: 'Playlist',
     submenu: [
       {
         label: 'Import',

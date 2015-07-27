@@ -14,19 +14,28 @@ body {
   flex-wrap: nowrap;
 }
 
-@import 'utils';
-@import 'colors';
-@import 'buttons';
-@import 'inputs';
-@import 'control-bar';
-@import 'time-slider';
-@import 'songs-list';
-@import 'settings';
+@import 'utils/index';
+@import 'directives/index';
 
+.chrome-bar {
+  flex: 0 20px;
+  min-height: 20px;
+
+  > * {
+    display: inline-block;
+  }
+}
 
 .controls {
-  flex: 0 90px;
-  min-height: 90px;
+  &.small {
+    flex: 0 30px;
+    min-height: 30px;
+  }
+
+  &.large {
+    flex: 0 50px;
+    min-height: 50px;
+  }
 }
 
 .songs-list {

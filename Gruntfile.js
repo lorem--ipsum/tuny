@@ -12,7 +12,7 @@ module.exports = function(grunt) {
       dist: {
         options: {bare: true},
         files: {
-          '<%= electronDir %>/app.js': ['src/app/*.coffee'],
+          '<%= electronDir %>/app.js': ['src/app/**/*.coffee'],
           '<%= electronDir %>/main.js': ['src/main.coffee']
         }
       }
@@ -34,6 +34,9 @@ module.exports = function(grunt) {
       },
       package_json: {
         files: [{src: 'package.json', dest: '<%= electronDir %>//'}]
+      },
+      assets: {
+        files: [{expand: true, cwd: 'src/app/', src: 'assets/**/*', dest: '<%= electronDir %>/'}]
       }
     },
 
@@ -43,7 +46,7 @@ module.exports = function(grunt) {
         tasks: ['coffee']
       },
       sass: {
-        files: ['src/styles/*.scss'],
+        files: ['src/styles/**/*.scss'],
         tasks: ['sass']
       },
       package_json: {

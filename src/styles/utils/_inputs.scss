@@ -1,4 +1,5 @@
 input[type=text] {
+  -webkit-app-region: no-drag;
   border: none;
 
   color: $text-primary;
