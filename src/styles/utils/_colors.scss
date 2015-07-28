@@ -1,8 +1,10 @@
 $text-disabled: hsla(0, 0%, 0%, 0.26);
+$text-hint: $text-disabled;
 $text-secondary: hsla(0, 0%, 0%, 0.54);
 $text-primary: hsla(0, 0%, 0%, 0.87);
 
 $text-white-disabled: hsla(0, 0%, 100%, 0.3);
+$text-white-hint: $text-white-disabled;
 $text-white-secondary: hsla(0, 0%, 100%, 0.7);
 $text-white-primary: hsla(0, 0%, 100%, 1);
 

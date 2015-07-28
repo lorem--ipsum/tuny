@@ -1,11 +1,14 @@
 input[type=text] {
-  -webkit-app-region: no-drag;
   border: none;
+  background-color: transparent;
 
-  color: $text-primary;
-  padding: 3px 7px;
+  color: $text-white-secondary;
 
-  opacity: 0.5;
+  font-size: 0.9em;
+  line-height: 0.9em;
+
+
+  width: 100%;
 
   @include animate(opacity);
 
@@ -13,4 +16,10 @@ input[type=text] {
     outline: none;
     opacity: 1;
   }
+
+}
+
+@include placeholder {
+  color: $text-white-hint;
+  padding-top: 4px;
 }

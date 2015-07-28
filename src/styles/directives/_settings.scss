@@ -1,26 +1,3 @@
-.settings-bar {
-  background-color: $tint-500;
-  width: 100%;
-  overflow-y: hidden;
-
-  .buttons {
-
-  }
-
-  .drawer {
-    height: 0px;
-    width: 100%;
-
-    background-color: $grey-100;
-    @include animate(height, padding-top);
-
-    &.open {
-      height: 130px;
-    }
-  }
-
-}
-
 .shortcuts-editor {
   padding-top: 10px;
   .title {

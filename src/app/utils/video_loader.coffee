@@ -2,6 +2,19 @@ angular.module('youtube', [])
 
 .service 'videoLoader', ($q) ->
   return {
+    getInfo :(urlOrId) ->
+      deferred = $q.defer()
+
+      youtubedl.getInfo urlOrId, [], {}, (err, info) ->
+        if err
+          deferred.reject(err)
+          console.warn(err)
+          return
+
+        deferred.resolve({id: info.id, title: info.title})
+
+      return deferred.promise
+
     load: (id) ->
       name = $q.defer()
       data = $q.defer()

@@ -94,7 +94,7 @@ angular.module('janitor', [])
 
 # KNIFE WREEEENCH
 .service '$janitor', ($q, $interval) ->
-  limit = 5 # files that aren't in the last played 5 are deleted
+  limit = 15 # files that aren't in the last n played are deleted
   delay = 1000*60*15 # 15 minutes old files are deleted
   _promise = undefined
 

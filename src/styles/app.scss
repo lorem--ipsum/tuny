@@ -6,8 +6,8 @@ body {
   font-family: 'Roboto', sans-serif;
   font-weight: 100;
   margin: 0;
-  // overflow-y: hidden;
-  min-width: 450px;
+  min-width: 400px;
+  overflow: hidden;
 
   display: flex;
   flex-direction: column;
@@ -23,18 +23,6 @@ body {
 
   > * {
     display: inline-block;
-  }
-}
-
-.controls {
-  &.small {
-    flex: 0 30px;
-    min-height: 30px;
-  }
-
-  &.large {
-    flex: 0 50px;
-    min-height: 50px;
   }
 }
 

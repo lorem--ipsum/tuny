@@ -8,40 +8,24 @@
 </head>
 
 <body ng-controller='TunyCtrl'>
-
-  <div class="chrome-bar">
-
-  </div>
-
   <div class="controls secondary small">
     <div class="row">
+      <div class="col-40">
+        <input type="text" placeholder="Search" ng-model="search.title">
+      </div><div class="col-60 right" ng-class="{'col-10': addVisible, 'col-60': !addVisible}">
+        <button ng-click="addVisible = !addVisible"><div class="fa fa-plus" ng-class="{tilted: addVisible}"></div></button>
+      </div><div class="col-0" ng-class="{'col-40': addVisible, 'col-0': !addVisible}">
+        <input
+          focus-when-true="addVisible"
+          type="text"
+          placeholder="URL or ID"
+          ng-model="songToAdd"
 
-      <div class="col-100">
-        <div class="tuny-icon"><img src="assets/tuny-logo.png" alt=""></div>
-        <div class="song-title" ng-bind="currentSong.title || 'Tuny'"></div>
-      </div>
-    </div>
-  </div>
-  <div class="controls secondary large">
-    <div class="row">
-      <div class="col-30">
-        <input type="text" placeholder="Filter list..." ng-model="search.title">
-        <button ng-click="search.title = ''" ng-show="search.title"><i class="fa fa-times"></i></button>
-      </div><div class="col-30">
-        <time-slider duration="currentSong.duration" current-time="currentSong.currentTime"></time-slider>
-      </div><div class="col-10">
-        <button ng-click="shuffled = !shuffled" ng-class="{disabled: !songs}">
-          <i class="fa" ng-class="{'fa-refresh': !shuffled, 'fa-random': shuffled}"></i>
+        >
+      </div><div class="col-0" ng-class="{'col-10': addVisible, 'col-0': !addVisible}">
+        <button ng-click="addSongFromUrlOrId(songToAdd)" ng-disabled="!songToAdd">
+          <div class="fa fa-plus" ng-class="{blink: isAdding}"></div>
         </button>
-      </div><div class="col-30 right">
-        <song-player
-            songs="songs"
-            current-song="currentSong"
-            is-playing="isPlaying"
-            duration="currentSong.duration"
-            current-time="currentSong.currentTime"
-          >
-        </song-player>
       </div>
     </div>
   </div>
@@ -51,7 +35,7 @@
       <div
         class="song"
         ng-class="{playing: $parent.currentSong === song}"
-        ng-repeat="song in songs | filter:search"
+        ng-repeat="song in songs | filter:search track by song.id"
         ng-click="$parent.currentSong = song"
       >
         <div class="icons">
@@ -66,16 +50,36 @@
     </div>
   </div>
 
-  <div class="settings-bar">
+  <div class="controls large hidden" ng-class="{hidden: !currentSong}">
+    <div class="song-title" ng-bind="currentSong.title || 'Tuny'"></div>
+  </div>
+  <div class="thin-line">
+    <time-slider duration="currentSong.duration" current-time="currentSong.currentTime"></time-slider>
+  </div>
+  <div class="controls secondary">
     <div class="row">
-      <div class="col-100">
+      <div class="col-10">
         <button title="Settings" ng-click="settingsOpen = !settingsOpen"><i class="fa fa-gear"></i></button>
+      </div><div class="col-80 center">
+        <song-player
+            songs="songs"
+            current-song="currentSong"
+            is-playing="isPlaying"
+            duration="currentSong.duration"
+            current-time="currentSong.currentTime"
+          >
+        </song-player>
+      </div><div class="col-10 right">
+        <button ng-disabled="!songs" ng-click="shuffled = !shuffled" ng-class="{disabled: !songs}">
+          <i class="fa" ng-class="{'fa-refresh': !shuffled, 'fa-random': shuffled}"></i>
+        </button>
       </div>
     </div>
-    <div class="drawer" ng-class="{open: settingsOpen}">
-      <shortcuts-editor open="settingsOpen"></shortcuts-editor>
-    </div>
   </div>
+  <div class="drawer" ng-class="{open: settingsOpen}">
+    <shortcuts-editor open="settingsOpen"></shortcuts-editor>
+  </div>
+
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>

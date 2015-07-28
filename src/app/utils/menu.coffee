@@ -31,6 +31,14 @@ Menu.setApplicationMenu(Menu.buildFromTemplate([
               injector.get('$rootScope').$apply()
           )
       }
+      {
+        label: 'Save',
+        accelerator: 'Command+S',
+        click: ->
+          injector = angular.element(document.querySelector('[ng-controller]')).injector()
+          injector.get('$commands').trigger('saveFile')
+          injector.get('$rootScope').$apply()
+      }
     ]
   },
   {

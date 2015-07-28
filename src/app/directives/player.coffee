@@ -74,7 +74,7 @@ angular.module('player', [])
       scope.$watch 'currentSong', (song) ->
         player.pause()
         if song
-          new Notification(song.title)
+          new Notification("Tuny", {body: song.title})
 
           scope.play(song)
         return

@@ -1,8 +1,20 @@
 .row {
-  [class^="col-"] {
+  [class^="col-"], [class *=" col-"] {
     display: inline-block;
     vertical-align: middle;
+    overflow: hidden;
 
+    @include animate(width);
+
+    &.right {
+      text-align: right;
+    }
+
+    &.center {
+      text-align: center;
+    }
+
+    &.col-0 {width: 0%;}
     &.col-10 {width: 10%;}
     &.col-20 {width: 20%;}
     &.col-30 {width: 30%;}
@@ -13,8 +25,17 @@
     &.col-80 {width: 80%;}
     &.col-100 {width: 100%;}
 
-    &.right {
-      text-align: right;
-    }
+  }
+}
+
+.thin-line {
+  height: 0;
+  position: relative;
+
+  .time-slider {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -10px;
   }
 }
