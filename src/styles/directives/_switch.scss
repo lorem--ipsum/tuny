@@ -1,0 +1,48 @@
+.switch {
+  $width: 25px;
+  text-align: left;
+
+  .track-container {
+    position: relative;
+    width: calc(100% - 100px);
+    display: inline-block;
+    vertical-align: middle;
+
+    .track {
+      width: $width;
+      height: 1px;
+      background-color: $text-white-secondary;
+    }
+
+    .thumb {
+      cursor: pointer;
+      background-color: $text-white-secondary;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      position: absolute;
+      top: -7px;
+      margin-left: -5px;
+      left: 0px;
+
+      @include animate(left);
+
+      .fa {
+        font-size: 0.7em;
+        top: 3px;
+        position: absolute;
+        left: 2px;
+        color: $tint-700;
+      }
+    }
+  }
+
+  &.on .thumb {
+    left: $width;
+    background-color: $tint-700;
+
+    .fa {
+      color: $text-white-secondary;
+    }
+  }
+}

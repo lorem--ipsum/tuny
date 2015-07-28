@@ -34,18 +34,29 @@ angular.module('player', [])
 
       scope.play = (song) ->
         fn = (s) ->
+          delete song.promise
           s.lastPlayed = new Date().getTime()
+          return unless song is scope.currentSong
           player.setAttribute('src', song.filePath)
           player.play()
           scope.preloadNext()
           return
 
-        if !song.filePath
-          song.isLoading = true
-          videoLoader.load(song.id).then (response) ->
-            song.filePath = response[0]
-            song.isLoading = false
+        if song.promise
+          song.promise.then ->
+            delete song.promise
             fn(song)
+            return
+        else if !song.filePath
+          song.promise = videoLoader.load(song.id).then(
+            (response) ->
+              song.filePath = response[0]
+              fn(song)
+              return response
+            (error) ->
+              scope.play(getSongAfter(song))
+              return error
+          )
         else
           fn(song)
 
@@ -61,7 +72,6 @@ angular.module('player', [])
         return
 
       scope.$watch 'currentSong', (song) ->
-
         player.pause()
         if song
           new Notification(song.title)
@@ -73,24 +83,25 @@ angular.module('player', [])
       scope.$watch scope.isPlaying, (v) -> scope.isPlayingAttr = v
 
       scope.preloadNext = ->
-        nextSong = getNextSong()
-        return if nextSong.filePath?
+        nextSong = getSongAfter(scope.currentSong)
+        return if nextSong.filePath? or nextSong.promise
 
         nextSong.preloading = true
-        videoLoader.load(nextSong.id).then (response) ->
+        nextSong.promise = videoLoader.load(nextSong.id).then (response) ->
           nextSong.filePath = response[0]
           nextSong.preloading = false
-          nextSong.lastPlayed = new Date()
-          return
+          nextSong.lastPlayed = new Date(new Date().getTime() + scope.currentSong.duration*1000)
+          delete nextSong.promise
+          return response
         return
 
-      getNextSong = -> scope.songs[(scope.songs.indexOf(scope.currentSong) + 1)%scope.songs.length]
+      getSongAfter = (song) -> scope.songs[(scope.songs.indexOf(song) + 1)%scope.songs.length]
       getPreviousSong = ->
         index = scope.songs.indexOf(scope.currentSong)
         index or= scope.songs.length
         return scope.songs[index-1]
 
-      scope.next = -> scope.currentSong = getNextSong()
+      scope.next = -> scope.currentSong = getSongAfter(scope.currentSong)
 
       scope.previous = ->
         if player.currentTime < 5

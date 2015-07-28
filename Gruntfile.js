@@ -29,9 +29,9 @@ module.exports = function(grunt) {
       html: {
         files: [{expand: true, cwd: 'src/', src: 'index.html', dest: '<%= electronDir %>/'}]
       },
-      node_modules: {
-        files: [{expand: true, src: 'node_modules/**', dest: '<%= electronDir %>/'}]
-      },
+      // node_modules: {
+      //   files: [{expand: true, src: 'node_modules/**', dest: '<%= electronDir %>/'}]
+      // },
       package_json: {
         files: [{src: 'package.json', dest: '<%= electronDir %>//'}]
       },

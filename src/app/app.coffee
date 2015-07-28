@@ -26,20 +26,14 @@ angular.module('tuny', ['utils', 'directives'])
 
   $scope.shuffled = false
 
-  $scope.toggleShuffle = ->
-    $scope.setShuffle(!$scope.shuffled)
-    return
-
-  $scope.setShuffle = (value) ->
-    console.log value
-    $scope.shuffled = value
+  $scope.$watch 'shuffled', (value) ->
     $settings.set('shuffle-mode', value)
     updateSongs()
 
     return
 
   $settings.get('last-file').then(loadSongs)
-  $settings.get('shuffle-mode').then($scope.setShuffle)
+  $settings.get('shuffle-mode').then (value) -> $scope.shuffled = value
 
   $commands.on('openFile', loadSongs)
 

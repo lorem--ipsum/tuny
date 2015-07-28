@@ -1,3 +1,4 @@
-*.app
-node_modules/
-.sass-cache/
+*.zip
+node_modules
+.sass-cache
+*.app/
