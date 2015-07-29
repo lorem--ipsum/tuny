@@ -1,6 +1,6 @@
 angular.module('player', [])
 
-.directive 'songPlayer', (videoLoader, $janitor, $commands) ->
+.directive 'songPlayer', (videoLoader, $janitor, $commands, $http) ->
   return {
     replace: true
     scope: {
@@ -74,7 +74,9 @@ angular.module('player', [])
       scope.$watch 'currentSong', (song) ->
         player.pause()
         if song
-          new Notification("Tuny", {body: song.title})
+          $http.get('http://api.icndb.com/jokes/random/10').then ({data}) ->
+            joke = (data.value.sort (a, b) -> a.joke.length - b.joke.length)[0].joke
+            new Notification(song.title, {body: joke})
 
           scope.play(song)
         return

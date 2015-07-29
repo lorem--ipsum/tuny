@@ -8,7 +8,7 @@ angular.module('youtube', [])
       youtubedl.getInfo urlOrId, [], {}, (err, info) ->
         if err
           deferred.reject(err)
-          console.warn(err)
+          console.error(err)
           return
 
         deferred.resolve({id: info.id, title: info.title})
@@ -27,7 +27,9 @@ angular.module('youtube', [])
           ['-f 141/171/140', '--restrict-filenames', '--get-filename']
           {}
           (err, info) ->
+            console.log(err, info)
             if err?
+              console.error(err)
               name.reject(err)
               return
 
@@ -37,7 +39,13 @@ angular.module('youtube', [])
               id
               ['-f 141/171/140', '--restrict-filenames']
               {cwd: tmp}
-              (err, output) -> if error? then data.reject(error) else data.resolve()
+              (err, output) ->
+                console.log(err, output)
+                if error?
+                  console.error(err)
+
+                else
+                  data.resolve()
             )
 
             petite

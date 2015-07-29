@@ -39,9 +39,12 @@ angular.module('tuny', ['utils', 'directives'])
     return
 
   $scope.$watch('allSongs', (allSongs) ->
-    BrowserWindow.getFocusedWindow()?.setDocumentEdited(
-      allSongs? and !(JSON.stringify(allSongs) is originalSongs)
-    )
+    return unless allSongs
+
+    cleanSongs = JSON.parse(JSON.stringify(allSongs)).map ({id, title}) -> {id, title}
+
+    BrowserWindow.getFocusedWindow()?.setDocumentEdited(!(JSON.stringify(cleanSongs) is originalSongs))
+
   , true)
 
   loadSongs = (filePath) ->
@@ -59,7 +62,8 @@ angular.module('tuny', ['utils', 'directives'])
 
   savePlaylist = ->
     return unless _filePath
-    fs.writeFile _filePath, JSON.stringify($scope.allSongs, null, 2), (err) ->
+    cleanSongs = JSON.parse(JSON.stringify($scope.allSongs)).map ({id, title}) -> {id, title}
+    fs.writeFile _filePath, JSON.stringify(cleanSongs, null, 2), (err) ->
       # notify error or success
 
       if !err
