@@ -16,17 +16,17 @@ angular.module('janitor', [])
         _settings = JSON.parse(data)
         _deferred.resolve(_settings)
     else
+      console.debug "Settings file not found, a brand new one will be created under #{settingsPath}"
       _settings = {}
       _deferred.resolve(_settings)
 
   return {
     set: (key, value) ->
       d = $q.defer()
-
+      console.debug "Setting #{key} to #{value}"
       _initialization.then ->
         _settings[key] = value
-
-        fs.writeFile settingsPath, JSON.stringify(_settings, null, 2), (err) ->
+        fs.writeFile settingsPath, JSON.stringify(_settings), (err) ->
           throw err if err?
           d.resolve()
 

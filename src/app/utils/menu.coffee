@@ -1,6 +1,7 @@
 remote = require('remote')
 Menu = remote.require('menu')
 dialog = remote.require('dialog')
+BrowserWindow = remote.require('browser-window')
 
 Menu.setApplicationMenu(Menu.buildFromTemplate([
   {
@@ -35,9 +36,17 @@ Menu.setApplicationMenu(Menu.buildFromTemplate([
         label: 'Save',
         accelerator: 'Command+S',
         click: ->
-          injector = angular.element(document.querySelector('[ng-controller]')).injector()
-          injector.get('$commands').trigger('saveFile')
-          injector.get('$rootScope').$apply()
+          fn = (filePath) ->
+            injector = angular.element(document.querySelector('[ng-controller]')).injector()
+            injector.get('$commands').trigger('saveFile', filePath)
+            injector.get('$rootScope').$apply()
+
+          w = BrowserWindow.getFocusedWindow()
+
+          if !!w.getRepresentedFilename()
+            fn(undefined)
+          else
+            dialog.showSaveDialog(w, {defaultPath: '~/playlist.json'}, fn)
       }
     ]
   },

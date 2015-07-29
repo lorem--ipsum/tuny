@@ -6,21 +6,11 @@ BrowserWindow = remote.require('browser-window')
 angular.module('tuny', ['utils', 'directives'])
 
 .controller 'TunyCtrl', ($scope, $http, $timeout, arrayUtils, $commands, $settings, videoLoader) ->
+  _filePath = undefined
   $scope.shuffled = false
 
   originalSongs = undefined
-  _filePath = undefined
-
-  $scope.addSongFromUrlOrId = (urlOrId) ->
-    $scope.isAdding = true
-    videoLoader.getInfo(urlOrId).then (song) ->
-      $scope.isAdding = false
-      $scope.allSongs.push(song)
-      $scope.songs.push(song)
-      $scope.songToAdd = ''
-      return
-
-    return
+  $scope.allSongs = []
 
   updateSongs = ->
     return unless $scope.allSongs?
@@ -38,6 +28,19 @@ angular.module('tuny', ['utils', 'directives'])
 
     return
 
+  updateSongs()
+
+  $scope.addSongFromUrlOrId = (urlOrId) ->
+    $scope.isAdding = true
+    videoLoader.getInfo(urlOrId).then (song) ->
+      $scope.isAdding = false
+      $scope.allSongs.push(song)
+      $scope.songs.push(song)
+      $scope.songToAdd = ''
+      return
+
+    return
+
   $scope.$watch('allSongs', (allSongs) ->
     return unless allSongs
 
@@ -47,28 +50,35 @@ angular.module('tuny', ['utils', 'directives'])
 
   , true)
 
-  loadSongs = (filePath) ->
-    $http.get(filePath).success (data) ->
-      _filePath = filePath
-      $settings.set('last-file', filePath)
-      app.addRecentDocument(filePath)
-      BrowserWindow.getFocusedWindow()?.setRepresentedFilename(filePath)
-      BrowserWindow.getFocusedWindow()?.setTitle(filePath.replace(/.*\/([^.]+\.json)/, '$1'))
+  setFilePath = (path) ->
+    _filePath = path
+    $settings.set('last-file', path)
+    app.addRecentDocument(path)
+    BrowserWindow.getFocusedWindow()?.setRepresentedFilename(path)
+    BrowserWindow.getFocusedWindow()?.setTitle(path.replace(/.*\/([^.]+\.json)/, '$1'))
+    return
+
+  loadSongs = (path) ->
+    return unless path?
+
+    $http.get(path).success (data) ->
+      setFilePath(path)
 
       originalSongs = JSON.stringify(data)
       $scope.allSongs = data
       updateSongs()
     return
 
-  savePlaylist = ->
-    return unless _filePath
+  savePlaylist = (newPath) ->
+    return unless _filePath or newPath
     cleanSongs = JSON.parse(JSON.stringify($scope.allSongs)).map ({id, title}) -> {id, title}
-    fs.writeFile _filePath, JSON.stringify(cleanSongs, null, 2), (err) ->
+    fs.writeFile _filePath or newPath, JSON.stringify(cleanSongs, null, 2), (err) ->
       # notify error or success
 
       if !err
         originalSongs = JSON.stringify($scope.allSongs)
-        BrowserWindow.getFocusedWindow()?.setDocumentEdited(false)
+        _filePath = newPath if newPath?
+        setFilePath(_filePath)
       else
         console.log err
 
@@ -76,14 +86,16 @@ angular.module('tuny', ['utils', 'directives'])
     return
 
 
-  $scope.$watch 'shuffled', (value) ->
-    $settings.set('shuffle-mode', value)
-    updateSongs()
 
     return
 
   $settings.get('last-file').then(loadSongs)
   $settings.get('shuffle-mode').then (value) -> $scope.shuffled = value
+
+  $scope.$watch 'shuffled', (value) ->
+    return unless value?
+    $settings.set('shuffle-mode', value)
+    updateSongs()
 
   $commands.on('openFile', loadSongs)
   $commands.on('saveFile', savePlaylist)
