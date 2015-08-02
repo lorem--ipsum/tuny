@@ -120,9 +120,15 @@ angular.module('player', [])
       return
     template: """
     <div class="song-player">
-      <button ng-click="previous()" ng-class="{disabled: !currentSong}"><i class="fa fa-2x fa-fast-backward"></i></button>
-      <button ng-click="playPause()"><i class="fa fa-2x" ng-class="{'fa-play': !isPlaying(), 'fa-pause': isPlaying()}"></i></button>
-      <button ng-click="next()" ng-class="{disabled: !currentSong}"><i class="fa fa-2x fa-fast-forward"></i></button>
+      <button ng-click="previous()" ng-class="{disabled: !currentSong}">
+        <i class="material-icons big">skip_previous</i>
+      </button>
+      <button ng-click="playPause()">
+        <i class="material-icons big">{{isPlaying() ? 'pause' : 'play_arrow'}}</i>
+      </button>
+      <button ng-click="next()" ng-class="{disabled: !currentSong}">
+        <i class="material-icons big">skip_next</i>
+      </button>
       <audio></audio>
     </div>
     """

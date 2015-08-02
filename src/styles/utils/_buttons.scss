@@ -20,11 +20,6 @@ button, a {
     color: $text-white-secondary;
   }
 
-  &.primary {
-    height: 40px;
-    width: 40px;
-  }
-
   &.dark {
     color: $text-secondary;
 
@@ -38,6 +33,18 @@ button, a {
 
     &.active {
       color: $text-secondary;
+    }
+  }
+
+  &.primary {
+    color: $tint-500;
+
+    &.disabled {
+      color: $tint-100;
+    }
+
+    &:not(.disabled):hover {
+      color: $tint-700;
     }
   }
 }

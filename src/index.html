@@ -2,8 +2,9 @@
 <html lang="en" ng-app="tuny">
 <head>
   <title>Tuny</title>
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" type="text/css" media="screen" href="app.css">
 </head>
 
@@ -13,7 +14,9 @@
       <div class="col-40">
         <input type="text" placeholder="Search" ng-model="search.title">
       </div><div class="col-60 right" ng-class="{'col-10': addVisible, 'col-60': !addVisible}">
-        <button ng-click="addVisible = !addVisible"><div class="fa fa-plus" ng-class="{tilted: addVisible}"></div></button>
+        <button ng-click="addVisible = !addVisible" ng-class="{tilted: addVisible}">
+          <i class="material-icons small">add</i>
+        </button>
       </div><div class="col-0" ng-class="{'col-40': addVisible, 'col-0': !addVisible}">
         <input
           focus-when-true="addVisible"
@@ -23,8 +26,12 @@
 
         >
       </div><div class="col-0" ng-class="{'col-10': addVisible, 'col-0': !addVisible}">
-        <button ng-click="addSongFromUrlOrId(songToAdd)" ng-disabled="!songToAdd">
-          <div class="fa fa-plus" ng-class="{blink: isAdding}"></div>
+        <button
+          ng-click="addSongFromUrlOrId(songToAdd)"
+          ng-disabled="!songToAdd"
+          ng-class="{blink: isAdding}"
+        >
+          add
         </button>
       </div>
     </div>
@@ -51,7 +58,7 @@
   </div>
 
   <div class="controls large hidden" ng-class="{hidden: !currentSong}">
-    <div class="song-title" ng-bind="currentSong.title || 'Tuny'"></div>
+    <song-name song="currentSong"></song-name>
   </div>
   <div class="thin-line">
     <time-slider duration="currentSong.duration" current-time="currentSong.currentTime"></time-slider>
@@ -59,19 +66,21 @@
   <div class="controls secondary">
     <div class="row">
       <div class="col-10">
-        <button title="Settings" ng-click="settingsOpen = !settingsOpen"><i class="fa fa-gear"></i></button>
+        <button title="Settings" ng-click="settingsOpen = !settingsOpen">
+          <i class="material-icons small">settings</i>
+        </button>
       </div><div class="col-80 center">
         <song-player
-            songs="songs"
-            current-song="currentSong"
-            is-playing="isPlaying"
-            duration="currentSong.duration"
-            current-time="currentSong.currentTime"
-          >
+          songs="songs"
+          current-song="currentSong"
+          is-playing="isPlaying"
+          duration="currentSong.duration"
+          current-time="currentSong.currentTime"
+        >
         </song-player>
       </div><div class="col-10 right">
         <button ng-disabled="!songs" ng-click="shuffled = !shuffled" ng-class="{disabled: !songs}">
-          <i class="fa" ng-class="{'fa-refresh': !shuffled, 'fa-random': shuffled}"></i>
+          <i class="material-icons small">{{shuffled ? 'shuffle' : 'repeat'}}</i>
         </button>
       </div>
     </div>

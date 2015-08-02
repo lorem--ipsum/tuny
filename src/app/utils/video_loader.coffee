@@ -27,7 +27,6 @@ angular.module('youtube', [])
           ['-f 141/171/140', '--restrict-filenames', '--get-filename']
           {}
           (err, info) ->
-            console.log(err, info)
             if err?
               console.error(err)
               name.reject(err)

@@ -17,15 +17,6 @@ body {
 @import 'utils/index';
 @import 'directives/index';
 
-.chrome-bar {
-  flex: 0 20px;
-  min-height: 20px;
-
-  > * {
-    display: inline-block;
-  }
-}
-
 .songs-list {
   flex: 1 1000px;
 }

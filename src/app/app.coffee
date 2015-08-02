@@ -85,10 +85,6 @@ angular.module('tuny', ['utils', 'directives'])
       return
     return
 
-
-
-    return
-
   $settings.get('last-file').then(loadSongs)
   $settings.get('shuffle-mode').then (value) -> $scope.shuffled = value
 

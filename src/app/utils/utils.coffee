@@ -1,1 +1,1 @@
-angular.module('utils', ['janitor', 'youtube'])
+angular.module('utils', ['janitor', 'youtube', 'songName'])

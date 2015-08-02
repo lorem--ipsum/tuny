@@ -80,7 +80,7 @@ angular.module('shortcuts', [])
       <shortcut-item ng-repeat="s in shortcuts" shortcut="s"></shortcut-item>
       <div class="buttons">
         <button class="dark cancel" ng-click="cancel()">Cancel</button>
-        <button class="dark save" ng-click="save()">Save</button>
+        <button class="primary save" ng-click="save()">Save</button>
       </div>
     </div>
     """

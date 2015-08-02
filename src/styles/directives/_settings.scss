@@ -1,8 +1,10 @@
 .shortcuts-editor {
   padding-top: 10px;
+
   .title {
-    font-size: 1.1em;
-    color: $text-primary;
+    font-size: 0.7em;
+    font-weight: 500;
+    color: $text-secondary;
     margin-bottom: 15px;
     margin-left: 10px;
 
@@ -20,12 +22,13 @@
     .label {
       color: $text-primary;
       width: 80px;
-      font-size: 0.8em;
+      font-size: 0.6em;
       text-align: right;
     }
   }
 
   .buttons {
     text-align: center;
+    margin-top: 15px;
   }
 }
