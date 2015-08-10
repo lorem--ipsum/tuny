@@ -24,9 +24,10 @@ angular.module('youtube', [])
       loadStuff = ->
         youtubedl.getInfo(
           id
-          ['-f 141/171/140', '--restrict-filenames', '--get-filename']
+          ['-f 141/171/140', '--restrict-filenames', '--get-filename', '--verbose']
           {}
           (err, info) ->
+            console.log('A', err, info)
             if err?
               console.error(err)
               name.reject(err)
@@ -39,7 +40,7 @@ angular.module('youtube', [])
               ['-f 141/171/140', '--restrict-filenames']
               {cwd: tmp}
               (err, output) ->
-                console.log(err, output)
+                console.log('B', err, output)
                 if error?
                   console.error(err)
 

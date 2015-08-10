@@ -1,4 +1,4 @@
-.song-name {
+.controls .song-name {
   text-align: center;
 
   font-weight: 100;
@@ -15,5 +15,32 @@
 
   .song-artist {
     font-size: 0.8em;
+  }
+}
+
+.songs-list .song {
+  .song-name {
+
+    font-weight: 100;
+    color: $text-secondary;
+    margin-bottom: 5px;
+
+    .song-title {
+      margin-bottom: 7px;
+      font-size: 1em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .song-artist {
+      font-size: 0.8em;
+    }
+  }
+
+  &.playing {
+    .song-name {
+      color: $text-primary;
+    }
   }
 }

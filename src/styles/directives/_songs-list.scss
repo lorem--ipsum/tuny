@@ -7,48 +7,40 @@
   @include top-shadow();
 
   .song {
-    height: 30px;
-    line-height: 30px;
-    padding: 10px 5px;
-
-    font-weight: 100;
-    font-size: 0.9em;
     cursor: pointer;
     color: $text-primary;
+    padding: 10px 0px 5px 5px;
 
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-
-    &:not(:last-child) {
-      border-bottom: 1px solid $grey-200;
-    }
+    border-bottom: 1px solid $grey-200;
 
     &:hover {
       background-color: $grey-200;
+
+      .on-hover {
+        opacity: 1;
+      }
     }
 
     &.playing {
       background-color: $grey-100;
-    }
 
-    .icons {
-      width: 20px;
-      padding-left: 10px;
-      display: inline-block;
-
-      i.fa {
-        color: $tint-500;
+      .on-play {
+        opacity: 1;
       }
     }
 
-    .info {
-      font-size: 0.7em;
-      padding-left: 5px;
+    > * {
+      display: inline-block;
     }
 
-    &.song-adder {
-      background-color: white;
+    .song-label {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .on-hover {
+      opacity: 0;
     }
   }
 }

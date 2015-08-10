@@ -4,8 +4,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-exec');
+
+  var pkg = grunt.file.readJSON('package.json');
 
   grunt.initConfig({
+
     electronDir: 'Tuny.app/Contents/Resources/app',
 
     coffee: {
@@ -30,7 +34,12 @@ module.exports = function(grunt) {
         files: [{expand: true, cwd: 'src/', src: 'index.html', dest: '<%= electronDir %>/'}]
       },
       node_modules: {
-        files: [{expand: true, src: 'node_modules/**', dest: '<%= electronDir %>/'}]
+        files: [{
+          expand: true, src: '**', cwd: 'node_modules', dest: '<%= electronDir %>/node_modules/',
+          filter: function(filePath) {
+            return !!pkg.dependencies[filePath.replace(/^node_modules\/([^/]+)\/.*$/, '$1')];
+          }
+        }]
       },
       package_json: {
         files: [{src: 'package.json', dest: '<%= electronDir %>//'}]
@@ -59,10 +68,17 @@ module.exports = function(grunt) {
       }
     },
 
+    exec: {
+      compress: {
+        cmd: function() {
+          return 'ditto -c -k --sequesterRsrc --keepParent Tuny.app Tuny-' + pkg.version + '.app.zip';
+        }
+      }
+    }
   });
 
 
   grunt.registerTask('default', ['coffee', 'sass', 'copy']);
+  grunt.registerTask('build', ['default', 'exec:compress']);
   grunt.registerTask('w', ['default', 'watch']);
-
 };

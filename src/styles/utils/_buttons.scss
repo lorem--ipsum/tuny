@@ -2,49 +2,34 @@ button, a {
   -webkit-app-region: no-drag;
   outline: none;
   border: none;
-  color: $text-white-secondary;
   background-color: transparent;
   border-radius: 50%;
   cursor: pointer;
 
-  &.disabled {
-    cursor: initial;
-    color: $text-white-disabled;
-  }
-
-  &:not(.disabled):hover {
-    color: $text-white-primary;
-  }
-
-  &.active {
-    color: $text-white-secondary;
-  }
-
-  &.dark {
-    color: $text-secondary;
+  @mixin colorized($color, $disabled-color, $hover-color)  {
+    color: $color;
 
     &.disabled {
-      color: $text-disabled;
+      cursor: initial;
+      color: $disabled-color;
     }
 
     &:not(.disabled):hover {
-      color: $text-primary;
+      color: $hover-color;
     }
+  }
 
-    &.active {
-      color: $text-secondary;
-    }
+  @include colorized($text-white-secondary, $text-white-disabled, $text-white-primary);
+
+  &.dark {
+    @include colorized($text-secondary, $text-disabled, $text-primary);
   }
 
   &.primary {
-    color: $tint-500;
+    @include colorized($tint-500, $tint-100, $tint-700);
+  }
 
-    &.disabled {
-      color: $tint-100;
-    }
-
-    &:not(.disabled):hover {
-      color: $tint-700;
-    }
+  &.warn {
+    @include colorized($grey-500, $grey-100, $red-700);
   }
 }

@@ -23,7 +23,6 @@
           type="text"
           placeholder="URL or ID"
           ng-model="songToAdd"
-
         >
       </div><div class="col-0" ng-class="{'col-10': addVisible, 'col-0': !addVisible}">
         <button
@@ -40,18 +39,22 @@
   <div class="songs-list">
     <div class="songs-container">
       <div
-        class="song"
+        class="song row"
         ng-class="{playing: $parent.currentSong === song}"
         ng-repeat="song in songs | filter:search track by song.id"
-        ng-click="$parent.currentSong = song"
       >
-        <div class="icons">
-          <i class="fa" ng-class="{'fa-play': song === currentSong}"></i>
-        </div>
-        {{song.title}}
-        <div class="icons">
-          <i class="fa fa-circle blink" ng-show="song.promise"></i>
-          <i class="fa fa-check" ng-show="song.filePath"></i>
+        <div class="col-10">
+          <button class="dark on-hover on-play" ng-click="$parent.currentSong = song">
+            <i class="material-icons" ng-class="{blink: song.promise}">play_circle_filled</i>
+          </button>
+        </div><div class="song-label col-70">
+          <song-name song="song"></song-name>
+        </div><div class="col-20">
+          <button class="warn on-hover" ng-click="removeSong(song)">
+            <i class="material-icons small">delete</i>
+          </button>
+          <i class="material-icons very-small blink" ng-show="song.promise">get_app</i>
+          <i class="material-icons very-small" ng-show="song.filePath">done</i>
         </div>
       </div>
     </div>

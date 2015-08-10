@@ -41,14 +41,23 @@ angular.module('tuny', ['utils', 'directives'])
 
     return
 
-  $scope.$watch('allSongs', (allSongs) ->
-    return unless allSongs
+  $scope.removeSong = (song) ->
+    index = $scope.allSongs.indexOf(song)
 
-    cleanSongs = JSON.parse(JSON.stringify(allSongs)).map ({id, title}) -> {id, title}
+    return if index is -1
 
+    $scope.allSongs.splice(index, 1)
+    $scope.songs.splice(index, 1)
+
+    return
+
+  updateEditedStatus = ->
+    return unless $scope.allSongs and originalSongs
+    cleanSongs = JSON.parse(JSON.stringify($scope.allSongs)).map ({id, title}) -> {id, title}
     BrowserWindow.getFocusedWindow()?.setDocumentEdited(!(JSON.stringify(cleanSongs) is originalSongs))
+    return
 
-  , true)
+  $scope.$watch('allSongs', updateEditedStatus, true)
 
   setFilePath = (path) ->
     _filePath = path
@@ -79,6 +88,7 @@ angular.module('tuny', ['utils', 'directives'])
         originalSongs = JSON.stringify($scope.allSongs)
         _filePath = newPath if newPath?
         setFilePath(_filePath)
+        updateEditedStatus()
       else
         console.log err
 
